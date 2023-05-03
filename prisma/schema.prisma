@@ -10,6 +10,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model Fornecedores {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(20)
+  cnpj Decimal @unique 
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  produtos Produto[]
+
+  @@map("fornecedores")
+}
+
+model Produto {  
+  id Int @id @default(autoincrement())  
+  nome String @db.VarChar(100)  
+  preco Decimal @db.Decimal(12,2)  
+  createdAt DateTime? @default(now())  
+  updatedAt DateTime? @updatedAt  
+
+  // Associação com categoria - produto é de uma unica categoria 
+  categoriaId Int 
+  categoria Categoria @relation(fields: [categoriaId], references: [id])
+
+  // produtos tem varios fornecedores 
+  fornecedores Fornecedores[]
+
+  @@map("podutos")
+}
+
+
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(50)
+
+  produtos Produto[]
+
+  @@map("categorias")
+}
+
 // Sistema Acadêmico
 
 // ADS, Comercio Exterior, atc
@@ -86,18 +127,8 @@ model Aluno {
   telefone String @db.VarChar(30)
   email String @db.VarChar(100)
   dataNascimento DateTime @db.Date
-  solicitacao Solicitacao[]
   alunoTurma AlunoTurma[] 
   @@map("alunos")
-}
-
-model Solicitacao{
-  id Int @id @default(autoincrement())
-  assunto String @db.VarChar(100)
-  descricao String @db.VarChar(1000)
-  dataAbertura DateTime @default(now()) @db.Date
-  alunoId Int
-  aluno Aluno @relation(fields: [alunoId],references: [id])
 }
 
 model Semestre{
