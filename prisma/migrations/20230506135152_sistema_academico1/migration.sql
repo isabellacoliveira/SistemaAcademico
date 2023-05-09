@@ -1,36 +1,4 @@
 -- CreateTable
-CREATE TABLE `fornecedores` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(20) NOT NULL,
-    `cnpj` DECIMAL(65, 30) NOT NULL,
-    `createdAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NULL,
-
-    UNIQUE INDEX `fornecedores_cnpj_key`(`cnpj`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `podutos` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(100) NOT NULL,
-    `preco` DECIMAL(12, 2) NOT NULL,
-    `createdAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NULL,
-    `categoriaId` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `categorias` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(50) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `cursos` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(50) NOT NULL,
@@ -105,6 +73,17 @@ CREATE TABLE `alunos` (
     `telefone` VARCHAR(30) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `dataNascimento` DATE NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Solicitacao` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `assunto` VARCHAR(100) NOT NULL,
+    `descricao` VARCHAR(1000) NOT NULL,
+    `dataAbertura` DATETIME(3) NOT NULL,
+    `alunoId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -194,18 +173,6 @@ CREATE TABLE `notas` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- CreateTable
-CREATE TABLE `_FornecedoresToProduto` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_FornecedoresToProduto_AB_unique`(`A`, `B`),
-    INDEX `_FornecedoresToProduto_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `podutos` ADD CONSTRAINT `podutos_categoriaId_fkey` FOREIGN KEY (`categoriaId`) REFERENCES `categorias`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
 -- AddForeignKey
 ALTER TABLE `cursos` ADD CONSTRAINT `cursos_professorId_fkey` FOREIGN KEY (`professorId`) REFERENCES `professores`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -217,6 +184,9 @@ ALTER TABLE `materialidaticos` ADD CONSTRAINT `materialidaticos_disciplinaId_fke
 
 -- AddForeignKey
 ALTER TABLE `alunos` ADD CONSTRAINT `alunos_cursoId_fkey` FOREIGN KEY (`cursoId`) REFERENCES `cursos`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Solicitacao` ADD CONSTRAINT `Solicitacao_alunoId_fkey` FOREIGN KEY (`alunoId`) REFERENCES `alunos`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `itemcalendarios` ADD CONSTRAINT `itemcalendarios_semestreId_fkey` FOREIGN KEY (`semestreId`) REFERENCES `semestres`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -259,9 +229,3 @@ ALTER TABLE `notas` ADD CONSTRAINT `notas_alunoTurmaId_fkey` FOREIGN KEY (`aluno
 
 -- AddForeignKey
 ALTER TABLE `notas` ADD CONSTRAINT `notas_provaId_fkey` FOREIGN KEY (`provaId`) REFERENCES `provas`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_FornecedoresToProduto` ADD CONSTRAINT `_FornecedoresToProduto_A_fkey` FOREIGN KEY (`A`) REFERENCES `fornecedores`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_FornecedoresToProduto` ADD CONSTRAINT `_FornecedoresToProduto_B_fkey` FOREIGN KEY (`B`) REFERENCES `podutos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

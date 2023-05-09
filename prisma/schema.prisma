@@ -1,229 +1,228 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+ 
+
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
+
+ 
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-
-model Fornecedores {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(20)
-  cnpj Decimal @unique 
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-
-  produtos Produto[]
-
-  @@map("fornecedores")
-}
-
-model Produto {  
-  id Int @id @default(autoincrement())  
-  nome String @db.VarChar(100)  
-  preco Decimal @db.Decimal(12,2)  
-  createdAt DateTime? @default(now())  
-  updatedAt DateTime? @updatedAt  
-
-  // Associação com categoria - produto é de uma unica categoria 
-  categoriaId Int 
-  categoria Categoria @relation(fields: [categoriaId], references: [id])
-
-  // produtos tem varios fornecedores 
-  fornecedores Fornecedores[]
-
-  @@map("podutos")
-}
-
-
-
-model Categoria {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(50)
-
-  produtos Produto[]
-
-  @@map("categorias")
-}
+ 
 
 // Sistema Acadêmico
 
+ 
+
 // ADS, Comercio Exterior, atc
 model Curso {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(50)
-  descricao String @db.VarChar(2000)
-  professorId Int
-  coordenador Professor @relation(fields: [professorId],references: [id])
-  aluno Aluno[]
-  turma Turma[]
-  @@map("cursos")
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(50)
+  descricao String @db.VarChar(2000)
+  professorId Int
+  coordenador Professor @relation(fields: [professorId],references: [id])
+  aluno Aluno[]
+  turma Turma[]
+  @@map("cursos")
 }
+
+ 
 
 model Professor {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(100)
-  lattes String @db.VarChar(100)
-  telefone String @db.VarChar(30)
-  email String @db.VarChar(100)
-  coordena Curso[]
-  turma Turma[]
-  @@map("professores")
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  lattes String @db.VarChar(100)
+  telefone String @db.VarChar(30)
+  email String @db.VarChar(100)
+  coordena Curso[]
+  turma Turma[]
+  @@map("professores")
 }
+
+ 
 
 model SalaAula {
-  id Int @id @default(autoincrement())
-  tipo String @db.VarChar(50)
-  temProjetor Boolean
-  bloco String @db.VarChar(30)
-  quantidadeCadeiras Int
-  quantidadeComputadores Int
-  turma Turma[]
-  @@map("salaaulas")
+  id Int @id @default(autoincrement())
+  tipo String @db.VarChar(50)
+  temProjetor Boolean
+  bloco String @db.VarChar(30)
+  quantidadeCadeiras Int
+  quantidadeComputadores Int
+  turma Turma[]
+  @@map("salaaulas")
 }
+
+ 
 
 model Disciplina {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(100)
-  ementa String @db.VarChar(500)
-  cargaHoraria Int
-  itemBibliografia ItemBibliografia[]
-  materialDidatico MaterialDidatico[]
-  turma Turma[]
-  @@map("disciplinas")
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  ementa String @db.VarChar(500)
+  cargaHoraria Int
+  itemBibliografia ItemBibliografia[]
+  materialDidatico MaterialDidatico[]
+  turma Turma[]
+  @@map("disciplinas")
 }
+
+ 
 
 model ItemBibliografia {
-  id Int @id @default(autoincrement())
-  tipo String @db.VarChar(20) // Principal ou Complementar
-  autores String @db.VarChar(200)
-  titulo String @db.VarChar(100)
-  isbn String? @db.VarChar(50) 
-  disciplinaId Int
-  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
-  @@map("itembibliografias")
+  id Int @id @default(autoincrement())
+  tipo String @db.VarChar(20) // Principal ou Complementar
+  autores String @db.VarChar(200)
+  titulo String @db.VarChar(100)
+  isbn String? @db.VarChar(50) 
+  disciplinaId Int
+  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
+  @@map("itembibliografias")
 }
+
+ 
 
 model MaterialDidatico {
-  id Int @id @default(autoincrement())
-  nomeArquivoOriginal String @db.VarChar(100)
-  nomeArquivoInterno String @db.VarChar(100) @unique
-  autores String @db.VarChar(200)
-  disciplinaId Int
-  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
-  @@map("materialidaticos")
+  id Int @id @default(autoincrement())
+  nomeArquivoOriginal String @db.VarChar(100)
+  nomeArquivoInterno String @db.VarChar(100) @unique
+  autores String @db.VarChar(200)
+  disciplinaId Int
+  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
+  @@map("materialidaticos")
 }
+
+ 
 
 model Aluno {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(100)
-  cursoId Int
-  curso Curso @relation(fields: [cursoId],references: [id])
-  telefone String @db.VarChar(30)
-  email String @db.VarChar(100)
-  dataNascimento DateTime @db.Date
-  alunoTurma AlunoTurma[] 
-  @@map("alunos")
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  cursoId Int
+  curso Curso @relation(fields: [cursoId],references: [id])
+  telefone String @db.VarChar(30)
+  email String @db.VarChar(100)
+  dataNascimento DateTime @db.Date
+  solicitacao Solicitacao[]
+  alunoTurma AlunoTurma[] 
+  @@map("alunos")
 }
+
+model Solicitacao {
+  id Int @id @default(autoincrement())
+  assunto String @db.VarChar(100)
+  descricao String @db.VarChar(1000)
+  dataAbertura DateTime
+  alunoId Int
+  aluno Aluno @relation(fields: [alunoId], references: [id])
+}
+
 
 model Semestre{
-  id Int @id @default(autoincrement())
-  descricao String @db.VarChar(50)
-  sigla String @db.VarChar(5) // exemplo 20231
-  itemCalendario ItemCalendario[]
-  turma Turma[]
-  @@map("semestres")
+  id Int @id @default(autoincrement())
+  descricao String @db.VarChar(50)
+  sigla String @db.VarChar(5) // exemplo 20231
+  itemCalendario ItemCalendario[]
+  turma Turma[]
+  @@map("semestres")
 }
+
+ 
 
 model ItemCalendario{
-  id Int @id @default(autoincrement())
-  periodoDe DateTime @db.Date
-  periodoAte DateTime @db.Date
-  descricao String @db.VarChar(100)
-  haveraAula Boolean
-  semestreId Int
-  semestre Semestre @relation(fields: [semestreId],references: [id])
-  @@map("itemcalendarios")
+  id Int @id @default(autoincrement())
+  periodoDe DateTime @db.Date
+  periodoAte DateTime @db.Date
+  descricao String @db.VarChar(100)
+  haveraAula Boolean
+  semestreId Int
+  semestre Semestre @relation(fields: [semestreId],references: [id])
+  @@map("itemcalendarios")
 }
+
+ 
 
 model Turma{
-  id Int @id @default(autoincrement())
-  cursoId Int
-  curso Curso @relation(fields: [cursoId],references: [id])
-  salaAulaId Int
-  salaAula SalaAula @relation(fields: [salaAulaId],references: [id])
-  professorId Int
-  professor Professor @relation(fields: [professorId],references: [id])
-  disciplinaId Int
-  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
-  semestreId Int
-  semestre Semestre @relation(fields: [semestreId],references: [id])
-  alunoTurma AlunoTurma[]
-  aula Aula[]
-  prova Prova[]
-  @@map("turmas")
+  id Int @id @default(autoincrement())
+  cursoId Int
+  curso Curso @relation(fields: [cursoId],references: [id])
+  salaAulaId Int
+  salaAula SalaAula @relation(fields: [salaAulaId],references: [id])
+  professorId Int
+  professor Professor @relation(fields: [professorId],references: [id])
+  disciplinaId Int
+  disciplina Disciplina @relation(fields: [disciplinaId],references: [id])
+  semestreId Int
+  semestre Semestre @relation(fields: [semestreId],references: [id])
+  alunoTurma AlunoTurma[]
+  aula Aula[]
+  prova Prova[]
+  @@map("turmas")
 }
+
+ 
 
 model AlunoTurma {
-  id Int @id @default(autoincrement())
-  turmaId Int
-  turma Turma @relation(fields: [turmaId],references: [id])
-  alunoId Int
-  aluno Aluno @relation(fields: [alunoId],references: [id])
-  chamada Chamada[]
-  prova Nota[]
-  @@unique([turmaId,alunoId])
-  @@map("alunoturmas")
+  id Int @id @default(autoincrement())
+  turmaId Int
+  turma Turma @relation(fields: [turmaId],references: [id])
+  alunoId Int
+  aluno Aluno @relation(fields: [alunoId],references: [id])
+  chamada Chamada[]
+  prova Nota[]
+  @@unique([turmaId,alunoId])
+  @@map("alunoturmas")
 }
+
+ 
 
 model Aula {
-  id Int @id @default(autoincrement())
-  conteudoProgramatico String @db.VarChar(200)
-  dataProgramada DateTime @db.Date
-  tecnicaMetodologica String @db.VarChar(100)
-  turmaId Int
-  turma Turma @relation(fields: [turmaId],references: [id])
-  chamada Chamada[]
-  @@map("aulas")
+  id Int @id @default(autoincrement())
+  conteudoProgramatico String @db.VarChar(200)
+  dataProgramada DateTime @db.Date
+  tecnicaMetodologica String @db.VarChar(100)
+  turmaId Int
+  turma Turma @relation(fields: [turmaId],references: [id])
+  chamada Chamada[]
+  @@map("aulas")
 }
+
+ 
 
 model Prova {
-  id Int @id @default(autoincrement())
-  dataProgramada DateTime @db.Date
-  tipo String @db.VarChar(30) // presencial, remota, trabalho
-  peso Int
-  turmaId Int
-  turma Turma @relation(fields: [turmaId],references: [id])
-  nota Nota[]
-  @@map("provas")
+  id Int @id @default(autoincrement())
+  dataProgramada DateTime @db.Date
+  tipo String @db.VarChar(30) // presencial, remota, trabalho
+  peso Int
+  turmaId Int
+  turma Turma @relation(fields: [turmaId],references: [id])
+  nota Nota[]
+  @@map("provas")
 }
+
+ 
 
 model Chamada{
-  id Int @id @default(autoincrement())
-  alunoTurmaId Int
-  aulonTurma AlunoTurma @relation(fields: [alunoTurmaId],references: [id])
-  aulaId Int
-  aula Aula @relation(fields: [aulaId],references: [id])
-  presente Boolean
-  @@map("chamadas")
+  id Int @id @default(autoincrement())
+  alunoTurmaId Int
+  aulonTurma AlunoTurma @relation(fields: [alunoTurmaId],references: [id])
+  aulaId Int
+  aula Aula @relation(fields: [aulaId],references: [id])
+  presente Boolean
+  @@map("chamadas")
 }
+
+ 
 
 model Nota{
-  id Int @id @default(autoincrement())
-  alunoTurmaId Int
-  alunoTurma AlunoTurma @relation(fields: [alunoTurmaId],references: [id])
-  provaId Int
-  prova Prova @relation(fields: [provaId],references: [id])
-  nota Decimal @db.Decimal(3,1)
-  @@map("notas")
+  id Int @id @default(autoincrement())
+  alunoTurmaId Int
+  alunoTurma AlunoTurma @relation(fields: [alunoTurmaId],references: [id])
+  provaId Int
+  prova Prova @relation(fields: [provaId],references: [id])
+  nota Decimal @db.Decimal(3,1)
+  @@map("notas")
 }
-
-
-
-
-
