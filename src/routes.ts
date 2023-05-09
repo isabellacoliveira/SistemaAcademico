@@ -19,11 +19,11 @@ Roteador.get(    // URL com parêmetro :id
     new TesteController().teste1 
 ); 
 
-Roteador.get('/produtos', new ProdutoController().index); 
-Roteador.get('/produtos/:id', new ProdutoController().show); 
-Roteador.post('/produtos', new ProdutoController().store); 
-Roteador.put('/produtos/:id', new ProdutoController().update); 
-Roteador.delete('/produtos/:id', new ProdutoController().delete);
+// Roteador.get('/produtos', new ProdutoController().index); 
+// Roteador.get('/produtos/:id', new ProdutoController().show); 
+// Roteador.post('/produtos', new ProdutoController().store); 
+// Roteador.put('/produtos/:id', new ProdutoController().update); 
+// Roteador.delete('/produtos/:id', new ProdutoController().delete);
 
 Roteador.get('/provas', new ProvasController().index); 
 Roteador.get('/provas/:id', new ProvasController().show); 

@@ -61,24 +61,23 @@ Usaremos o POSTMAN para testar o CRUD:
 
 ### POST 
 
-![BD](./assets/CP1.gif)
-![BD](./assets/CP2.gif) 
+![BD](./assets/p1.gif)
 
 ### GET 
 
-![BD](./assets/CP3.gif)
+![BD](./assets/p4.gif)
 
 ### GET ID  
 
-![BD](./assets/CP4.gif)
+![BD](./assets/p2.gif)
 
 ### PUT 
 
-![BD](./assets/CP5.gif)
+![BD](./assets/p3.gif)
 
 ### DELETE 
 
-![BD](./assets/CP6.gif)
+![BD](./assets/p5.gif)
 
 
 
