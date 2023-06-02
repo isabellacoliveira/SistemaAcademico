@@ -188,18 +188,18 @@ model Aula {
   @@map("aulas")
 }
 
- 
 
 model Prova {
-  id Int @id @default(autoincrement())
-  dataProgramada DateTime @db.Date
-  tipo String @db.VarChar(50) // presencial, remota, trabalho
-  peso Int
-  turmaId Int
-  turma Turma @relation(fields: [turmaId],references: [id])
-  nota Nota[]
-  @@map("provas")
+  id Int @id @default(autoincrement())
+  dataProgramada DateTime @db.DateTime(0)
+  tipo String @db.VarChar(50) // presencial, remota, trabalho
+  peso Int
+  turmaId Int
+  turma Turma  @relation(fields: [turmaId], references: [id])
+  nota Nota[]
+  @@map("provas")
 }
+
 
  
 
