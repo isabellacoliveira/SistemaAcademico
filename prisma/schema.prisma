@@ -45,8 +45,6 @@ model Professor {
   @@map("professores")
 }
 
- 
-
 model SalaAula {
   id Int @id @default(autoincrement())
   tipo String @db.VarChar(50)
@@ -195,7 +193,7 @@ model Aula {
 model Prova {
   id Int @id @default(autoincrement())
   dataProgramada DateTime @db.Date
-  tipo String @db.VarChar(30) // presencial, remota, trabalho
+  tipo String @db.VarChar(50) // presencial, remota, trabalho
   peso Int
   turmaId Int
   turma Turma @relation(fields: [turmaId],references: [id])

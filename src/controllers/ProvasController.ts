@@ -9,7 +9,9 @@ class ProvasController {
         const provas = await prisma.prova.findMany(
             {
                 orderBy:{dataProgramada:'asc'},
-                select:{                    
+                // where:{id: Number(req.params.id)},                
+                select:{      
+                    id: true,              
                     dataProgramada:true,
                     tipo:true,                    
                     peso:true,                    
